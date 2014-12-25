@@ -95,4 +95,42 @@ public class AppMechanics {
 			}
 		}
 	}
+	
+	public static void rollDice(MainGui Gui){
+		int times = 0;
+		int faces = 0;
+		try{
+		times = Integer.parseInt(Gui.RollNum.getText().trim());
+		} catch (NumberFormatException e){
+			JOptionPane.showMessageDialog(Gui, "The value entered in rolls is not a number!", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		} 
+		try{
+		faces = Integer.parseInt(Gui.RollSides.getText().trim());
+		} catch (NumberFormatException e){
+			JOptionPane.showMessageDialog(Gui, "The value entered in Sides is not a number!", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(times == 1){
+			int random = (int) ((Math.random() * faces) + 1);
+			JOptionPane.showMessageDialog(Gui, "You rolled a " + random + "!", "Roll Result", JOptionPane.PLAIN_MESSAGE);
+		} else if(times <= 0){
+			JOptionPane.showMessageDialog(Gui, "The value entered in times is not a positive number!", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			int[] randoms = new int[times];
+			for(int i = 0; i < times; i++) randoms[i] = (int) ((Math.random() * faces) + 1);
+			JOptionPane.showMessageDialog(Gui, "You rolled a... " + concatIntArray(randoms) + "and the sum of these numbers is " + addIntArray(randoms) + "!" , "Roll Result", JOptionPane.PLAIN_MESSAGE);
+		}
+	}
+	private static String concatIntArray(int[] numbs){
+		String num = "\n";
+		for(int i = 0; i < numbs.length; i++)num += numbs[i] + "\n";
+		return num;
+	}
+	
+	private static int addIntArray(int[] numbs){
+		int num = 0;
+		for(int i = 0; i < numbs.length; i++)num += numbs[i];
+		return num;
+	}
 }
